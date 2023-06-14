@@ -10,8 +10,14 @@ class TreeNode {
 
   /** sumValues(): add up all values of invoking node and its children.
    * Returns sum as an integer. */
-  sumValues() {
-  //  return this.children;
+  sumValues(sum = this.val, children = this.children) {
+    console.log("sum", sum);
+
+    if (children.length > 0) {
+      return children[0].sumValues(sum + this.val, this.children.slice(1));
+    }
+
+    return sum;
   }
 
   /** countEvens(): starting from the invoking node and moving through its
@@ -24,11 +30,12 @@ class TreeNode {
   /** numGreater(lowerBound): starting from the invoking node and moving through
    * its children, return a count of the number of nodes whose value is greater
    * than lowerBound. */
-  numGreater(lowerBound){
+  numGreater(lowerBound) {
 
   }
 }
 
+/** takes in tree node and lables as root */
 class Tree {
   constructor(root = null) {
     this.root = root;
@@ -36,68 +43,18 @@ class Tree {
 
   /** sumValues(): add up all values in the tree. */
   sumValues() {
-    let toVisitQueue = [this.root];
-    let sum = 0;
-
-    while(toVisitQueue.length){
-      let current = toVisitQueue.pop();
-
-      if (current == null) return sum;
-
-      sum += current.val
-
-      for(let child of current.children){
-        toVisitQueue.push(child)
-      }
-    }
-
-    return sum;
-
+    return this.root.sumValues();
   }
 
   /** countEvens(): count all nodes in the tree that have even values. */
   countEvens() {
-    let toVisitQueue = [this.root];
-    let count = 0;
-
-    while(toVisitQueue.length){
-      let current = toVisitQueue.pop();
-
-      if (current == null) return count;
-
-      if (current.val % 2 === 0) {
-        count += 1
-      }
-
-      for(let child of current.children){
-        toVisitQueue.push(child)
-      }
-    }
-
-    return count;
+    return this.root.countEvens();
   }
 
   /** numGreater(lowerBound): return a count of the number of nodes
    * whose value is greater than lowerBound. */
   numGreater(lowerBound) {
-    let toVisitQueue = [this.root];
-    let count = 0;
-
-    while(toVisitQueue.length){
-      let current = toVisitQueue.pop();
-
-      if (current == null) return count;
-
-      if (current.val > lowerBound) {
-        count += 1
-      }
-
-      for(let child of current.children){
-        toVisitQueue.push(child)
-      }
-    }
-
-    return count;
+    return this.root.numGreater(lowerBound);
   }
 }
 
