@@ -11,7 +11,7 @@ class TreeNode {
   /** sumValues(): add up all values of invoking node and its children.
    * Returns sum as an integer. */
   sumValues() {
-   return this.children;
+  //  return this.children;
   }
 
   /** countEvens(): starting from the invoking node and moving through its
@@ -36,16 +36,18 @@ class Tree {
 
   /** sumValues(): add up all values in the tree. */
   sumValues() {
-    let toVisitNode = [this];
+    let toVisitQueue = [this.root];
     let sum = 0;
 
-    while(toVisitNode.length){
-      let current = toVisitNode.pop();
+    while(toVisitQueue.length){
+      let current = toVisitQueue.pop();
+
+      if (current == null) return sum;
 
       sum += current.val
 
       for(let child of current.children){
-        toVisitNode.push(child)
+        toVisitQueue.push(child)
       }
     }
 
@@ -55,13 +57,47 @@ class Tree {
 
   /** countEvens(): count all nodes in the tree that have even values. */
   countEvens() {
+    let toVisitQueue = [this.root];
+    let count = 0;
 
+    while(toVisitQueue.length){
+      let current = toVisitQueue.pop();
+
+      if (current == null) return count;
+
+      if (current.val % 2 === 0) {
+        count += 1
+      }
+
+      for(let child of current.children){
+        toVisitQueue.push(child)
+      }
+    }
+
+    return count;
   }
 
   /** numGreater(lowerBound): return a count of the number of nodes
    * whose value is greater than lowerBound. */
   numGreater(lowerBound) {
+    let toVisitQueue = [this.root];
+    let count = 0;
 
+    while(toVisitQueue.length){
+      let current = toVisitQueue.pop();
+
+      if (current == null) return count;
+
+      if (current.val > lowerBound) {
+        count += 1
+      }
+
+      for(let child of current.children){
+        toVisitQueue.push(child)
+      }
+    }
+
+    return count;
   }
 }
 
